@@ -1,10 +1,16 @@
-#include "iostream"
+#include <iostream>
+#include <vector>
 using namespace std;
 
 #define LEN(arr) ((int) (sizeof (arr) / sizeof (arr)[0]))
 
 class Zoo {
     public:
+        int elapsedDays = 0;
+        struct Exhibit {
+            int ID, animalCount;
+        };
+
         void createPlot() { // Fills plot of land with '*'
             for (int i=0; i<plotRows; i++){
                 for (int j=0; j<plotColumns; j++){
@@ -33,37 +39,50 @@ class Zoo {
             cout << "\n╚═════════════════════════════════════════╝" << endl;
         }
 
-        void addExhibit() { // Adds 7x7 Exhibit to Plot (TODO: Make Dynamic)
-            switch(exhibitNum){
-                case 0:
-                    exhibitArr[0][3] = '1';
+        void printExVec() {
+            cout << exVec.size();
+        }
 
-                    for (int i=0; i<7; i++){
+        void addExhibit() { // Adds 7x7 Exhibit to Plot (TODO: Make Dynamic)
+            switch(exVec.size()){
+                case 0:
+                    Exhibit ex1; // Create new struct
+                    ex1.ID = 1;
+                    ex1.animalCount = 0;
+                    exhibitArr[0][3] = '1'; // Label the visual
+                    exVec.push_back(ex1);
+
+                    for (int i=0; i<7; i++){ // Display
                         for (int j=0; j<7; j++){
                             plotArr[i][j] = exhibitArr[i][j];
                         }
                     }
-                    exhibitNum++;
                 break;
                 case 1:
+                    Exhibit ex2;
+                    ex2.ID = 2;
+                    ex2.animalCount = 0;
                     exhibitArr[0][3] = '2';
+                    exVec.push_back(ex2);
 
                     for (int i=0; i<7; i++){
                         for (int j=0; j<7; j++){
                             plotArr[i][j+7] = exhibitArr[i][j];
                         }
                     }
-                    exhibitNum++;
                 break;
                 case 2:
+                    Exhibit ex3;
+                    ex3.ID = 3;
+                    ex3.animalCount = 0;
                     exhibitArr[0][3] = '3';
+                    exVec.push_back(ex3);
 
                     for (int i=0; i<7; i++){
                         for (int j=0; j<7; j++){
                             plotArr[i][j+14] = exhibitArr[i][j];
                         }
                     }
-                    exhibitNum++;
                 break;
 
                 default:
@@ -74,7 +93,7 @@ class Zoo {
 
     private:
         int titleLength;
-        int exhibitNum = 0;
+        vector<Exhibit> exVec;
         char plotArr[21][21];
         int plotRows = LEN(plotArr);
         int plotColumns = LEN(plotArr[0]);
